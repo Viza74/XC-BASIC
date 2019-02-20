@@ -70,10 +70,30 @@ class Expression
         return success;
     }
 
-    short as_int()
+    bool is_constant()
     {
         string expr = join(this.node.matches);
-        return to!short(expr);
+        if(this.program.is_variable(expr)) {
+            Variable var = this.program.findVariable(expr);
+            if(var.isConst) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    string as_constant()
+    {
+        string expr = join(this.node.matches);
+        Variable var = this.program.findVariable(expr);
+        return to!string(var.constValInt);
+    }
+
+    int as_int()
+    {
+        string expr = join(this.node.matches);
+        return to!int(expr);
     }
 
     override string toString()

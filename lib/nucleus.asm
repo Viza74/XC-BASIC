@@ -733,6 +733,14 @@ NUCL_DIVU16 SUBROUTINE
 	pla
 	sta (reserved0),y
 	ENDM
+	
+	; faster version of poke
+	; can be used if address is a constant
+	MAC pokeconst
+	pla ;discard high byte
+	pla
+	sta {1}
+	ENDM
 
 	MAC for
 	; max value already pushed
